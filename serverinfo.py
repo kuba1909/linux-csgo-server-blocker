@@ -20,4 +20,7 @@ class ServerInfo:
             print(COLOR_YELLOW, end='')
         else:
             print(COLOR_RED, end='')
-        print(str(self.ping) + 'ms' + END_COLOR + '\t-\t' + self.desc)
+        print(str(self.ping) + 'ms' + END_COLOR, end='')
+        if self.ping < 10:
+            print('\t', end='')
+        print('\t-\t' + self.desc)
