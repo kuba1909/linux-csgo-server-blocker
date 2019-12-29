@@ -21,6 +21,14 @@ I strongly recommend you to be the party leader. If somebody else searches for a
 
 Try running the script as root.
 
+> I want to unblock all servers.
+
+The script does not provide a functionality for deletion *yet*. You can delete the rules by hand as of now, they have comments prefixed with `lcsb - `
+
+> I want to unblock a specific server/region.
+
+See the answer above.
+
 > Why another one?
 
 Well, I don't even know if the other ones are working currently. I feel like I need to learn Python and I thought that would be a nice little project.
