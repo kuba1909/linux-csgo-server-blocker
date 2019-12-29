@@ -87,14 +87,8 @@ def block_servers(i: int) -> None:
                 'ufw',
                 'deny',
                 'out',
-                'from',
-                relay['ipv4'],
-                'port',
-                str(relay['port_range'][0]),
                 'to',
                 relay['ipv4'],
-                'port',
-                str(relay['port_range'][1]),
                 'comment',
                 'lcsb - ' + serverinfos[j].desc], stderr=STDOUT, stdout=PIPE)
             p.communicate()
