@@ -5,14 +5,13 @@ END_COLOR = '\033[0m'
 
 
 class ServerInfo:
-    def __init__(self, desc, ping):
+    def __init__(self, desc, ping, relays):
         self.desc = desc
         self.ping = ping
+        self.relays = relays
 
     def print(self, i):
         print('(' + COLOR_GREEN + str(i) + END_COLOR + ')', end='')
-        if i < 10:
-            print('\t', end='')
         print('\t-\t', end='')
         if self.ping <= 32:
             print(COLOR_GREEN, end='')

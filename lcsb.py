@@ -1,12 +1,33 @@
 import json
 import os
 import re
+import sys
 import threading
 import urllib.request
+from subprocess import Popen, PIPE, STDOUT
 from typing import List
 
 from serverinfo import ServerInfo
 
+
+def check_ping() -> None:
+    p = Popen(['ping', '-V'], stderr=STDOUT, stdout=PIPE)
+    p.communicate()
+    if p.returncode != 0:
+        print("Please install ping in order to use this script.")
+        sys.exit(1)
+
+
+def check_ufw() -> None:
+    p = Popen(['ufw', 'version'], stderr=STDOUT, stdout=PIPE)
+    p.communicate()
+    if p.returncode != 0:
+        print("Please install ufw in order to use this script.")
+        sys.exit(1)
+
+
+check_ping()
+check_ufw()
 URL = 'https://raw.githubusercontent.com/SteamDatabase/SteamTracking/master/Random/NetworkDatagramConfig.json'
 
 
@@ -44,7 +65,7 @@ def ping_server(desc, relays) -> None:
             if match is not None:
                 ping = int(match[1])
     if ping != -1:
-        serverinfos.append(ServerInfo(desc, ping))
+        serverinfos.append(ServerInfo(desc, ping, relays))
 
 
 def is_number(s: str) -> bool:
@@ -53,6 +74,41 @@ def is_number(s: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+def block_servers(i: int) -> None:
+    j: int = i
+    regions: int = 0
+    distinct_servers: int = 0
+    while j < len(serverinfos):
+        regions += 1
+        for relay in serverinfos[j].relays:
+            p = Popen([
+                'ufw',
+                'deny',
+                'out',
+                'from',
+                relay['ipv4'],
+                'port',
+                str(relay['port_range'][0]),
+                'to',
+                relay['ipv4'],
+                'port',
+                str(relay['port_range'][1]),
+                'comment',
+                'lcsb - ' + serverinfos[j].desc], stderr=STDOUT, stdout=PIPE)
+            p.communicate()
+            if p.returncode != 0:
+                print('Failed blocking a server in ' + serverinfos[j].desc + ', skipping...')
+            else:
+                distinct_servers += 1
+        j += 1
+    p = Popen(['ufw', 'enable'], stderr=STDOUT, stdout=PIPE)
+    p.communicate()
+    if p.returncode != 0:
+        print("Could not enable ufw, are you a privileged user?")
+        sys.exit(1)
+    print('Blocked ' + str(distinct_servers) + ' servers in ' + str(regions) + ' regions.')
 
 
 def get_user_input() -> None:
@@ -65,6 +121,7 @@ def get_user_input() -> None:
         user_input: str = input(prompt)
     i: int = int(user_input)
     print('\nBlocking all servers in the range from ' + serverinfos[i].desc + ' to ' + serverinfos[-1].desc)
+    block_servers(i)
 
 
 server_count: int = 0

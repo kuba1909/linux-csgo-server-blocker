@@ -9,11 +9,17 @@ This scripts fetches the [gameserver infrastructure provided by Valve](https://g
 
 > Does this one still work?
 
-No, it does not work *yet*. The last thing I am missing are the firewall rules.
+Yes, at the time of writing this script works. If it does not anymore, feel free to contact me.
 
 > Do I have to be the party leader?
 
 I strongly recommend you to be the party leader. If somebody else searches for a match and finds a server which you have blocked but the leader didn't, you will simply not be able to accept while the others can.
+
+> Failed blocking a server in [region], skipping...
+>
+> Could not enable ufw, are you a privileged user?
+
+Try running the script as root.
 
 > Why another one?
 
@@ -21,5 +27,4 @@ Well, I don't even know if the other ones are working currently. I feel like I n
 
 > Why only Linux?
 
-I am running Linux-based distributions only, that's why. The firewall rules aren't implemented yet, but I am planning to do so with iptables or ufw. I don't know if you can also do that on apple systems, but it is very likely that changes need to be made.
-
+I am running Linux-based distributions only, that's why. The firewall rules are applied by ufw. I don't know if you can also do that on Apple/BSD/... systems, but it is very likely that changes need to be made.
