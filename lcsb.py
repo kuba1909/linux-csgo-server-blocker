@@ -58,12 +58,13 @@ def is_number(s: str) -> bool:
 def get_user_input() -> None:
     print('\nPlease choose the first index to be blocked in the firewall')
     print(COLOR_YELLOW + 'Warning!' + END_COLOR + ' All the servers below your choice will be blocked as well')
-    user_input: str = input('lcsb (0-' + str((len(serverinfos) - 1)) + ')#')
+    prompt: str = 'lcsb (0-' + str((len(serverinfos) - 1)) + ')# '
+    user_input: str = input(prompt)
     while is_number(user_input) is not True or int(user_input) < 0 or int(user_input) >= len(serverinfos):
         print('\nPlease choose the first index to be blocked in the firewall')
-        user_input: str = input('lcsb (0-' + str(len(serverinfos) - 1) + ')#')
-    print(
-        '\nBlocking all servers in the range from ' + serverinfos[int(user_input)].desc + ' to ' + serverinfos[-1].desc)
+        user_input: str = input(prompt)
+    i: int = int(user_input)
+    print('\nBlocking all servers in the range from ' + serverinfos[i].desc + ' to ' + serverinfos[-1].desc)
 
 
 server_count: int = 0
