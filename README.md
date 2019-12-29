@@ -3,7 +3,7 @@ lcsb is a little tool written in Python 3.8. The purpose is to block specific se
 
 # How does it work?
 
-This scripts fetches the [gameserver infrastructure provided by Valve](https://github.com/SteamDatabase/SteamTracking/blob/master/Random/NetworkDatagramConfig.json) and does a quick ping measurement for each server region. Then it provides a list of those servers sorted ascending by the latency. You can now select an index. All servers below (and including the index) will be blocked for the specified port regions, which means that CS:GO is going to connect you to servers which are not blocked (the remaining ones).
+This script fetches the [gameserver infrastructure provided by Valve](https://github.com/SteamDatabase/SteamTracking/blob/master/Random/NetworkDatagramConfig.json) and does a quick ping measurement for each server region. Then it provides a list of those servers sorted ascending by the latency. You can now select an index. All servers below (and including the index) will be blocked for the specified port regions, which means that CS:GO is going to connect you to servers which are not blocked (the remaining ones).
 
 # F.A.Q.
 
